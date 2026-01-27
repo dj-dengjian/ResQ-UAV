@@ -1,0 +1,127 @@
+{
+  "version": "3.3.3",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "person",
+      "score": 0.6733960509300232,
+      "points": [
+        [
+          1042.0,
+          0.0
+        ],
+        [
+          1071.0,
+          0.0
+        ],
+        [
+          1071.0,
+          57.0
+        ],
+        [
+          1042.0,
+          57.0
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": null,
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "person",
+      "score": 0.6736697554588318,
+      "points": [
+        [
+          246.0,
+          10.0
+        ],
+        [
+          289.0,
+          10.0
+        ],
+        [
+          289.0,
+          103.0
+        ],
+        [
+          246.0,
+          103.0
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": null,
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "person",
+      "score": 0.7298908829689026,
+      "points": [
+        [
+          44.0,
+          650.0
+        ],
+        [
+          112.0,
+          650.0
+        ],
+        [
+          112.0,
+          739.0
+        ],
+        [
+          44.0,
+          739.0
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": null,
+      "attributes": {},
+      "kie_linking": []
+    },
+    {
+      "label": "person",
+      "score": 0.5955089926719666,
+      "points": [
+        [
+          187.0,
+          42.0
+        ],
+        [
+          228.0,
+          42.0
+        ],
+        [
+          228.0,
+          122.0
+        ],
+        [
+          187.0,
+          122.0
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "difficult": false,
+      "shape_type": "rectangle",
+      "flags": null,
+      "attributes": {},
+      "kie_linking": []
+    }
+  ],
+  "imagePath": "0001253.jpg",
+  "imageData": null,
+  "imageHeight": 1071,
+  "imageWidth": 1904,
+  "description": ""
+}
