@@ -1,42 +1,42 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# ===================== 全局配置 & 数据准备 (保留所有润色设置) =====================
-# 解决Matplotlib中英文渲染问题，设置学术常用字体Times New Roman
+# ===================== Global Configuration & Data Preparation (Keep all polishing settings) =====================
+# Solve Matplotlib Chinese/English rendering issues, set Times New Roman (commonly used in academic papers)
 plt.rcParams['font.sans-serif'] = ['Times New Roman', 'DejaVu Sans']
-plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
-plt.rcParams['font.family'] = 'serif'  # 全局衬线字体，所有文字自动继承
+plt.rcParams['axes.unicode_minus'] = False  # Fix negative sign display issue
+plt.rcParams['font.family'] = 'serif'  # Global serif font, all text inherits this setting automatically
 
-# 图表核心配置
+# Chart core configuration
 algorithms = ['RTMDet', 'Faster R-CNN', 'Cascade R-CNN', 'DINO']
-bar_colors = ['#FFA500', '#2E8B57']  # 学术风配色：暖橙-Corrupted Test，深绿-Retrain Test
-line_colors = ['#E65100', '#1E6F5C']  # 折线颜色：同色系加深（深橙-Corrupted，深绿-Retrain）
-markers = ['s', '^']  # 折线标记：方块-Corrupted，三角-Retrain
-width = 0.32  # 微调柱子宽度，布局更舒展
-x = np.arange(len(algorithms))  # x轴坐标
-fontsize_label = 14  # 数值标注字体大小
-line_style = '-'  # 折线样式：实线
-line_width = 2  # 折线宽度
-marker_size = 7  # 标记点大小
-marker_edge_width = 1.5  # 标记点描边宽度
-bar_edge_color = 'white'  # 柱子白色描边，增加立体感
-bar_edge_width = 1  # 柱子描边宽度
+bar_colors = ['#FFA500', '#2E8B57']  # Academic color scheme: Warm Orange-Corrupted Test, Dark Green-Retrain Test
+line_colors = ['#E65100', '#1E6F5C']  # Line colors: Darker shades of the same color system (Dark Orange-Corrupted, Dark Green-Retrain)
+markers = ['s', '^']  # Line markers: Square-Corrupted Test, Triangle-Retrain Test
+width = 0.32  # Fine-tune bar width for more comfortable layout
+x = np.arange(len(algorithms))  # X-axis coordinates
+fontsize_label = 14  # Font size of value labels on bars
+line_style = '-'  # Line style: Solid line
+line_width = 2  # Line width
+marker_size = 7  # Marker size
+marker_edge_width = 1.5  # Marker edge width
+bar_edge_color = 'white'  # White edge for bars to enhance 3D effect
+bar_edge_width = 1  # Bar edge width
 
-# ---------------------- 替换为截图中的 Corrupted Test vs Retrain Test 数据 ----------------------
-# AP 指标
+# ---------------------- Replace with Corrupted Test vs Retrain Test data from screenshot ----------------------
+# AP metrics
 corrupted_ap = [0.369, 0.325, 0.362, 0.402]
 retrain_ap = [0.392, 0.336, 0.380, 0.413]
 
-# AP50 指标
+# AP50 metrics
 corrupted_ap50 = [0.622, 0.521, 0.586, 0.638]
 retrain_ap50 = [0.665, 0.580, 0.616, 0.673]
 
-# APs 指标
+# APs metrics
 corrupted_aps = [0.273, 0.249, 0.272, 0.328]
 retrain_aps = [0.282, 0.267, 0.286, 0.314]
 
 
-# ===================== 通用函数：柱状图顶部数值标注 (保留原设置) =====================
+# ===================== Universal Function: Add Value Labels on Top of Bars (Keep original settings) =====================
 def add_bar_labels(ax, bars, offset=0.01):
     for bar in bars:
         height = bar.get_height()
@@ -45,17 +45,17 @@ def add_bar_labels(ax, bars, offset=0.01):
                 fontfamily='Times New Roman')
 
 
-# ===================== 通用绘图函数：修复fontfamily报错，其余润色效果不变 =====================
+# ===================== Universal Plotting Function: Fix fontfamily error, keep other polishing effects =====================
 def plot_metric_fig(metric_cor, metric_ret, title, ylim, label_offset, save_name):
     fig, ax = plt.subplots(figsize=(8, 6))
 
-    # 1. 绘制分组柱状图（加白色描边）
+    # 1. Draw grouped bar chart (with white edge)
     bar_cor = ax.bar(x - width / 2, metric_cor, width, label='Corrupted Test', color=bar_colors[0],
                     edgecolor=bar_edge_color, linewidth=bar_edge_width)
     bar_ret = ax.bar(x + width / 2, metric_ret, width, label='Retrain Test', color=bar_colors[1],
                      edgecolor=bar_edge_color, linewidth=bar_edge_width)
 
-    # 2. 绘制折线（标记点填充+描边）
+    # 2. Draw lines (filled and stroked markers)
     ax.plot(x - width / 2, metric_cor, color=line_colors[0], linestyle=line_style,
             marker=markers[0], ms=marker_size, lw=line_width,
             markeredgecolor=line_colors[0], markeredgewidth=marker_edge_width,
@@ -65,33 +65,33 @@ def plot_metric_fig(metric_cor, metric_ret, title, ylim, label_offset, save_name
             markeredgecolor=line_colors[1], markeredgewidth=marker_edge_width,
             markerfacecolor=bar_colors[1])
 
-    # 3. 添加数值标注
+    # 3. Add value labels on bars
     add_bar_labels(ax, bar_cor, offset=label_offset)
     add_bar_labels(ax, bar_ret, offset=label_offset)
 
-    # 4. 版式润色：核心修改——删除tick_params里的fontfamily，修复报错
+    # 4. Layout polishing: Core fix - Remove fontfamily from tick_params to resolve error
     ax.set_title(title, fontsize=18, fontfamily='Times New Roman', pad=15)
     ax.set_xticks(x)
-    # x轴刻度：显式指定字体，其余继承全局
+    # X-axis ticks: Explicitly specify font, others inherit global settings
     ax.set_xticklabels(algorithms, fontsize=16, fontfamily='Times New Roman', rotation=0)
     ax.set_ylim(ylim)
-    # 设置y轴刻度步长，生成刻度值
+    # Set y-axis tick step and generate tick values
     y_ticks = np.arange(ylim[0], ylim[1] + 0.05, 0.1)
     ax.set_yticks(y_ticks)
-    # y轴刻度：显式指定字体（替代原tick_params的错误写法，更稳妥）
+    # Y-axis ticks: Explicitly specify font (replace incorrect tick_params usage, more reliable)
     ax.set_yticklabels([f'{t:.1f}' for t in y_ticks], fontsize=16, fontfamily='Times New Roman')
 
-    # 隐藏顶/右边框 + 浅灰色水平网格
+    # Hide top/right spines + Light gray horizontal grid
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.grid(axis='y', color='#EAEAEA', linestyle='-', linewidth=0.8, alpha=0.8)
     ax.set_axisbelow(True)
 
-    # 精简图例
+    # Simplified legend
     ax.legend(loc='upper right', frameon=True, fancybox=True, shadow=False,
               framealpha=1, prop={'family': 'Times New Roman', 'size': 14})
 
-    # 5. 300dpi高清保存
+    # 5. Save as high-resolution image (300 dpi)
     plt.savefig(
         save_name,
         dpi=300,
@@ -102,7 +102,7 @@ def plot_metric_fig(metric_cor, metric_ret, title, ylim, label_offset, save_name
     plt.close()
 
 
-# ===================== 绘制三张独立图（调用通用函数，无报错） =====================
+# ===================== Draw three independent charts (Call universal function, no errors) =====================
 # 1. AP (Average Precision)
 plot_metric_fig(corrupted_ap, retrain_ap, 'AP (Corrupted vs Retrain Test)', (0, 0.6),
                 label_offset=0.012,
